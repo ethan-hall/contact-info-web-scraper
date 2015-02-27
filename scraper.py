@@ -45,7 +45,7 @@ for i in range(0, numPages):
 print username  # for debug
 
 # 2d list for username,full name,email,phone,ventures
-contactList = [[0 for i in range(5)] for j in range(len(username))]
+contactList = [[0 for i in range(6)] for j in range(len(username))]
 
 for i in range(0, len(username)):   # grab contact info from every username
     print i  # status print
@@ -104,6 +104,18 @@ for i in range(0, len(username)):   # grab contact info from every username
             ventureTemp += page[ventureIndex]
             ventureIndex += 1
     contactList[i][4] = ventureTemp
+
+    # find and store role
+    roleTemp = ''
+    roleSearchStr = 'Choose your current school</span>'
+    roleIndex = page.find(roleSearchStr) + 40
+    if roleIndex != (-1+40):  # error checking
+        while page[roleIndex] != '>':
+            roleIndex += 1
+        while page[roleIndex] != '<':
+            roleTemp += page[roleIndex]
+            roleIndex += 1
+    contactList[i][5] = roleTemp
 
 #  save as CSV
 fl = open('ContactList.csv', 'w')
